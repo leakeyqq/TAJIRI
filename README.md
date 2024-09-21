@@ -1,8 +1,5 @@
 # TAJIRI
 
-[<img src="https://drive.google.com/file/d/1qf0xTDuGQSKmNF2HkH_lE7xVNUVbsEVp/view?usp=drivesdk">](https://t.me/sho6ot)
-
-
 > # We are making the stock market accessible to everyone globally
 
 ### Our first mission is to tokenize all stocks at the Nairobi Securities Exchange (NSE) and make them available on the blockchain for everyone
