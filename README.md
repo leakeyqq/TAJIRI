@@ -1,7 +1,7 @@
 # TAJIRI
 > # We are making the stock market accessible to everyone globally
 
-## Our first mission is to tokenize all stocks at the Nairobi Securities Exchange (NSE) and make them available on the blockchain for everyone
+### Our first mission is to tokenize all stocks at the Nairobi Securities Exchange (NSE) and make them available on the blockchain for everyone
 
 ## Process of buying a stock on TAJIRI Decentralized app
 * Connect your wallet to TAJIRI Dapp.
