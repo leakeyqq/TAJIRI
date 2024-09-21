@@ -1,6 +1,6 @@
 # TAJIRI
 
-[<img src="https://img.shields.io/badge/Telegram-%40Me-orange">](https://t.me/sho6ot)
+[<img src="https://drive.google.com/file/d/1qf0xTDuGQSKmNF2HkH_lE7xVNUVbsEVp/view?usp=drivesdk">](https://t.me/sho6ot)
 
 
 > # We are making the stock market accessible to everyone globally
