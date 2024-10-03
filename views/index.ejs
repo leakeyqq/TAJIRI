@@ -3,321 +3,619 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>TAJIRI - Trade stocks on the blockchain</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+      @layer library, reset, base, demo;
+@import 'https://unpkg.com/open-props@2.0.0-beta.5' layer(library);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap');
 
-            :root {
-            --dark-color: #191f1d;
-            --mid-dark: #555a57;
-            --light-color: #ece0c8;
-            --mid-light: #949993;
-            --shadow: #0005;
-            --linear-rainbow: linear-gradient(
-                to right,#ede6bf,#ecc947,#cb5a31,#6f5d79,#4e779a
-            );
-            --circle-rainbow: radial-gradient(
-                circle at left top,#ede6bf,#ecc947,#cb5a31,#6f5d79,#4e779a
-            );
-            --noise-texture: url(https://i.gyazo.com/a26366e538851a5c569ff648e99b7fd4.png);
-            --gif-texture: url(https://64.media.tumblr.com/da60c13b478dda09ab90c27e880983b8/tumblr_nd4pwdPKdc1tun3l0o1_1280.gifv);
-            }
+@layer reset {
 
-            html,
-            body {
-            margin: 0;
-            height: 100vh;
-            }
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
 
-            body {
-            display: grid;
-            place-items: center;
-            background: var(--dark-color);
-            background-image: var(--noise-texture);
-            background-blend-mode: overlay;
-            }
+  :where(:not(dialog)) {
+    margin: 0;
+  }
+}
 
-            h1 {
-            margin: 0;
-            font-family: "Mulish", sans-serif;
-            font-weight: 1000;
-            font-size: 64px;
-            color: var(--light-color);
-            }
+@layer base {
+  html {
+    --nav-block-size: 74px;
+    --brand-gradient: linear-gradient(227deg,
+        #1400c7 0%,
+        #00bbff 100%);
 
-            h2 {
-            margin: 0;
-            font-family: "Playfair Display", serif;
-            font-size: 16px;
-            color: var(--mid-light);
-            }
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
+  }
 
-            h3 {
-            margin: 0;
-            font-family: "DM Serif Display", serif;
-            font-size: 24px;
-            color: var(--mid-light);
-            }
+  body {
+    font-family: 'Inter', sans-serif;
+    min-block-size: 100dvb;
+  }
+}
 
-            p {
-            font-family: "Mulish", sans-serif;
-            font-weight: 700;
-            width: 390px;
-            color: var(--mid-light);
-            }
+@layer demo {
+  .navbar {
+    min-block-size: var(--nav-block-size);
+    display: inline-flex;
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    background-color: white;
+    z-index: var(--layer-3);
+    place-items: center end;
+    padding-block: var(--size-3);
+    padding-inline: var(--size-5);
 
-            nav {
-            display: flex;
-            align-items: center;
-            justify-content: end;
-            box-sizing: border-box;
-            margin: 30px 128px;
-            gap: 48px;
-            font-size: 16px;
-            }
+    @media (width >=600px) {
+      padding-inline: 6dvi;
+    }
+  }
 
-            a {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-size: 12px;
-            font-family: "Mulish", sans-serif;
-            color: var(--mid-light);
-            font-weight: 400;
-            text-decoration: none;
-            transition: all 0.2s ease-in-out;
-            }
+  .nav-cta-btn {
+    font-size: var(--font-size-1);
+    font-weight: var(--font-weight-7);
+    inline-size: max-content;
+    white-space: nowrap;
+    text-decoration: none;
+    padding-block: var(--size-3);
+    padding-inline: var(--size-7);
+    border: var(--border-size-2) solid transparent;
+    color: black;
+    position: relative;
+    isolation: isolate;
 
-            a:not(.buy, .buy-cta, .learn) {
-            width: 64px;
-            }
+    background: linear-gradient(white, white) padding-box,
+      var(--brand-gradient) border-box;
+    border-radius: var(--radius-6);
+    overflow: hidden;
 
-            a:hover:not(.buy, .buy-cta, .learn) {
-            transition: all 0.2s ease-in-out;
-            font-weight: 900;
-            text-shadow: 0 0 8px var(--light-color);
-            }
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      inset: 0;
 
-            .scotch-container {
-            margin: 0;
-            padding: 0;
-            display: grid;
-            height: 580px;
-            width: 960px;
-            background-image: linear-gradient(
-                150deg,
-                var(--dark-color) 60.2%,
-                var(--mid-dark) 60.28%,
-                var(--mid-dark) 60.7%,
-                var(--dark-color) 60.78%,
-                var(--dark-color) 61.4%,
-                var(--mid-dark) 61.48%,
-                var(--mid-dark) 62.6%,
-                var(--dark-color) 62.68%,
-                var(--dark-color) 63.4%,
-                var(--mid-dark) 63.48%,
-                var(--mid-dark) 64.6%,
-                var(--dark-color) 64.68%,
-                var(--dark-color) 65.4%,
-                var(--mid-dark) 65.48%,
-                var(--mid-dark) 67.4%,
-                var(--dark-color) 67.48%,
-                var(--dark-color) 68.4%,
-                var(--mid-dark) 68.48%,
-                var(--mid-dark) 71.4%,
-                var(--dark-color) 71.48%,
-                var(--dark-color) 72.4%,
-                var(--mid-dark) 72.48%,
-                var(--mid-dark) 76.4%,
-                var(--dark-color) 76.48%,
-                var(--dark-color) 77.4%,
-                var(--mid-dark) 77.48%,
-                var(--mid-dark) 81.4%,
-                var(--dark-color) 81.48%,
-                var(--dark-color) 82.4%,
-                var(--mid-dark) 82.48%,
-                var(--mid-dark) 87.4%,
-                var(--dark-color) 87.48%
-            );
-            box-sizing: border-box;
-            /*   scale:2; */
-            animation: spawn 2s ease-in-out forwards; 
-            }
+      background: var(--brand-gradient);
+      mix-blend-mode: screen;
+    }
 
-            .scotch-container:before {
-            content: "";
-            display: flex;
-            position: absolute;
-            background-image: var(--noise-texture);
-            height: 580px;
-            width: 960px;
-            mix-blend-mode: overlay;
-            pointer-events: none;
-            z-index: 3;
-            }
+    &:hover {
+      color: white;
 
-            .scotch-container:hover:after {
-            content: "";
-            display: flex;
-            position: absolute;
-            background-image: var(--gif-texture);
-            height: 580px;
-            width: 960px;
-            background-repeat: no-repeat;
-            background-size: cover;
-            mix-blend-mode: screen;
-            pointer-events: none;
-            opacity: 64%;
-            z-index: 3;
-            }
+      &::before {
+        background: var(--brand-gradient) padding-box,
+          var(--brand-gradient) border-box;
+        background-repeat: no-repeat;
+        background-size: contain;
+        mix-blend-mode: normal;
+        z-index: -1;
+      }
+    }
+  }
 
-            .main-container {
-            padding: 0;
-            margin: auto;
-            display: grid;
-            height: 460px;
-            gap: 64px;
-            place-items: center;
-            box-sizing: border-box;
-            }
+  .section {
+    --section-block-size: max(400px, 100dvb);
+    display: grid;
+    background-color: white;
+    min-block-size: var(--section-block-size);
+    position: relative;
+    block-size: 100%;
+    display: grid;
 
-            .text-container {
-            display: flex;
-            flex-direction: column;
-            }
+    >* {
+      grid-area: 1/1;
+    }
+  }
 
-            .text-sphere-container {
-            display: flex;
-            width: 125%;
-            gap: 128px;
-            align-items: center;
-            }
+  .section-wrapper {
+    position: relative;
+    display: grid;
 
-            .sphere {
-            display: grid;
-            height: 200px;
-            width: 200px;
-            background-image: var(--circle-rainbow);
-            border: 3px solid var(--dark-color);
-            border-radius: 50%;
-            transition: all 0.4s;
-            box-shadow: 0px 0px var(--shadow);
-            }
+    @media (width >=960px) {
+      grid-template-columns: 1fr 1fr;
+    }
 
-            .sphere:hover {
-            scale: 1.1;
-            box-shadow: 16px 16px var(--shadow);
-            transition: all 0.2s;
-            }
+    @media (width < 960px) {
+      padding-block-start: calc(var(--nav-block-size) + var(--size-7));
+      padding-block-end: var(--size-7);
+    }
+  }
 
-            .buy {
-            display: grid;
-            place-items: center;
-            font-weight: 900;
-            border: 1px solid var(--mid-light);
-            height: 40px;
-            width: 128px;
-            transition: all 0.2s;
-            }
+  .video {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: -1;
+  }
 
-            .buy:hover {
-            scale: 1.1;
-            background: var(--light-color);
-            color: var(--dark-color);
-            border: 1px solid var(--light-color);
-            }
+  .content-wrapper {
+    display: grid;
 
-            .buy-cta {
-            display: grid;
-            place-items: center;
-            color: var(--dark-color);
-            font-weight: 900;
-            background-image: linear-gradient(
-                to right,
-                var(--light-color),
-                var(--light-color)
-            );
-            height: 40px;
-            width: 200px;
-            font-size: 16px;
-            transition: all 0.4s;
-            }
+    @media (width < 960px) {
+      gap: var(--size-7);
+    }
+  }
 
-            .buy-cta:hover {
-            scale: 1.1;
-            color: var(--light-color);
-            background-image: var(--linear-rainbow);
-            transition: all 0.2s;
-            }
+  .meta {
+    display: grid;
+    gap: var(--size-3);
+  }
 
-            .learn-arrow {
-            margin: -40px 0;
-            text-align: center;
-            transition: all 0.2s;
-            }
+  .content {
+    display: grid;
+    inline-size: 100%;
+    place-items: center;
+    padding-block: var(--size-7);
+    padding-inline: var(--size-5);
 
-            .learn:hover {
-            scale: 1.2;
-            font-weight: 900;
-            }
+    @media (width >=960px) {
+      padding: var(--size-10);
+      min-block-size: 100cqb;
+      place-items: center end;
+    }
 
-            .learn {
-            display: grid;
-            color: var(--light-color);
-            font-family: "Mulish", sans-serif;
-            font-weight: 400;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.2s;
-            }
+    @media (width < 960px) {
+      gap: var(--size-5);
+    }
+  }
 
-            .arrow {
-            margin: -6px;
-            padding: 0;
-            font-size: 32px;
-            color: var(--light-color);
-            }
+  .mobile-visual {
+    inline-size: 100%;
+    aspect-ratio: var(--ratio-square);
 
-            @keyframes spawn{
-            0%{
-                box-shadow: 0 0 0 var(--shadow);
-                opacity:0%;
-            }
-            100%{
-                box-shadow: 0 0 32px var(--shadow);
-                opacity:100%;
-            }
-            }
+    @media (width >=960px) {
+      display: none;
+    }
+  }
+
+  .headline {
+    font-size: var(--font-size-7);
+    font-weight: var(--font-weight-4);
+    max-inline-size: var(--size-content-1);
+    text-wrap: pretty;
+
+    @media (width < 960px) {
+      font-size: var(--font-size-6);
+    }
+  }
+
+  .desc {
+    font-size: var(--font-size-4);
+    line-height: 1.5;
+    max-inline-size: 40ch;
+    text-wrap: pretty;
+
+    @media (width < 960px) {
+      font-size: var(--font-size-3);
+    }
+  }
+
+  .visual {
+    display: grid;
+    position: sticky;
+    block-size: var(--section-block-size);
+    inset-block-start: 0;
+    container-type: size;
+
+    @media (width < 960px) {
+      display: none;
+    }
+  }
+
+  .video-visual {
+    inline-size: 100%;
+    block-size: var(--section-block-size);
+    display: block;
+    position: sticky;
+    inset-block-start: 0;
+    isolation: isolate;
+    filter: hue-rotate(210deg);
+  }
+
+  .card-wrapper {
+    container-type: size;
+    display: grid;
+    place-items: center;
+    overflow: clip;
+
+    >* {
+      grid-area: 1/1;
+    }
+  }
+
+  .card {
+    aspect-ratio: var(--ratio-square);
+    inline-size: 70cqi;
+    border-radius: var(--radius-3);
+    scale: 0.4;
+  }
+
+  .card-img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .card-1 {
+    scale: 1;
+  }
+
+  .card-2 {
+    translate: -35cqi 30cqb;
+    opacity: 0.3;
+  }
+
+  .card-3 {
+    translate: 0cqi 50cqb;
+    opacity: 0.5;
+  }
+
+  .card-4 {
+    translate: 45cqi 40cqb;
+    opacity: 0.5;
+  }
+
+  .content-1 {
+    --_text-gradient: linear-gradient(227deg,
+        #1400c7 0%,
+        #00bbff 100%);
+  }
+
+  .content-2 {
+    --_text-gradient: linear-gradient(227deg,
+        #28dc28 0%,
+        #00bbff 100%);
+  }
+
+  .content-3 {
+    --_text-gradient: linear-gradient(227deg,
+        #1400c7 0%,
+        #b800b1 100%);
+  }
+
+  .content-4 {
+    --_text-gradient: linear-gradient(227deg,
+        #b800b1 0%,
+        #f50000 100%);
+  }
+
+  .text-highlight {
+    background: var(--_text-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  body {
+    timeline-scope: --content-1, --content-2, --content-3, --content-4;
+  }
+
+  .section {
+    view-timeline-name: --section;
+  }
+
+  .content-1 {
+    view-timeline-name: --content-1;
+  }
+
+  .content-2 {
+    view-timeline-name: --content-2;
+  }
+
+  .content-3 {
+    view-timeline-name: --content-3;
+  }
+
+  .content-4 {
+    view-timeline-name: --content-4;
+  }
+
+  .card {
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+
+  .card-1 {
+    animation-timeline: --content-1;
+    animation-name: slide-up-first-card;
+  }
+
+  .card-2 {
+    animation-timeline: --content-2;
+    animation-name: slide-up-card;
+  }
+
+  .card-3 {
+    animation-timeline: --content-3;
+    animation-name: slide-up-card;
+  }
+
+  .card-4 {
+    animation-timeline: --content-4;
+    animation-name: slide-up-card;
+  }
+
+  .video-visual {
+    animation-timeline: --section;
+    animation-range-end: exit 110%;
+    animation-name: update-hue;
+    animation-timing-function: step-end;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes update-hue {
+    0% {
+      filter: hue-rotate(210deg);
+    }
+
+    25% {
+      filter: hue-rotate(150deg);
+    }
+
+    45% {
+      filter: hue-rotate(300deg);
+    }
+
+    60% {
+      filter: hue-rotate(4deg);
+    }
+  }
+
+  @keyframes slide-up-first-card {
+    50% {
+      translate: 0;
+      opacity: 1;
+    }
+
+    90% {
+      translate: 0 -50cqi;
+      scale: 0.6;
+    }
+
+    100% {
+      translate: 0 -100cqi;
+      opacity: 0;
+    }
+  }
+
+  @keyframes slide-up-card {
+    50% {
+      opacity: 1;
+      translate: 0;
+      scale: 1;
+    }
+
+    90% {
+      opacity: 0.5;
+      scale: 0.6;
+      translate: 0 -50cqb;
+    }
+
+    100% {
+      translate: 0 -100cqi;
+      opacity: 0;
+    }
+  }
+}
     </style>
 </head>
 <body>
+  <nav class="navbar">
 
-    <div class="scotch-container">
-        <nav>
-          <a href="#">CONTACT</a>
-          <a href="#">ABOUT</a>
-          <a href="https://www.amazon.com/-/es/Scotch-Cinta-blanco-T-120-est%C3%A1ndar/dp/B008C7Z54Y" class="buy">BUY NOW</a>
-        </nav>
-        <div class="main-container">
-          <div class="text-sphere-container">
-            <div class="text-container">
-              <h1>Scotch</h1>
-              <h2>VIDEOCASSETTE EG</h2>
-              <h3>T 120</h3>
-              <p>Designed by the inventors of videotape, this Scotch EG Videocasette gives your superior performance</p>
-              <a href="https://www.amazon.com/-/es/Scotch-Cinta-blanco-T-120-est%C3%A1ndar/dp/B008C7Z54Y" class="buy-cta">Buy Now</a>
-            </div>
-            <a href="https://www.amazon.com/-/es/Scotch-Cinta-blanco-T-120-est%C3%A1ndar/dp/B008C7Z54Y">
-              <div class="sphere"></div>
-            </a>
+      <img src="/img/logos/logo-no-background.png" height="50px" alt="">
+    
+    <button class="nav-cta-btn" id="connectButton" style="margin-left: 30px;">Connect Wallet</button>
+    <button class="nav-cta-btn" id="disconnectButton" style="display: none; margin-left: 30px;"></button>
+
+    <button class="nav-cta-btn" id="p2pMarket" style="margin-left: 30px; display: none;">Peer to Peer market</button>
+
+    
+    <div id="walletAddress" style="display: none;"></div>
+
+  </nav>
+  <div class="section">
+    <div class="video-visual">
+      <video
+        class="video"
+        autoplay
+        loop
+        muted
+        poster=""
+        role="none"
+        aria-label="background gradient animation"
+      >
+        <source
+          src="https://raw.githubusercontent.com/mobalti/open-props-interfaces/main/dynamic-content-lockups-v2/assets/bg-gradient-animation.mp4"
+          type="video/mp4"
+        />
+      </video>
+    </div>
+    <div class="section-wrapper">
+      <div class="content-wrapper">
+        <div class="content content-1">
+          <div class="mobile-visual">
+            <img
+              class="card-img"
+              src="/img/home/strong-1.webp"
+            />
           </div>
-          <div class="learn-arrow">
-            <div class="learn">LEARN MORE</div>
-            <div class="arrow">🢓</div>
+          <div class="meta">
+            <h2 class="headline">
+              Trade Kenyan<span class="text-highlight"> stocks on base</span>
+            </h2>
+            <p class="desc">
+              Get ready to connect your self custodial wallet and trade all stocks available at the Nairobi Securities Exchange (NSE).
+            </p>
+          </div>
+        </div>
+        <div class="content content-2">
+          <div class="mobile-visual">
+
+            <img
+            class="card-img"
+            src="/img/home/smart-traded.png"
+            />
+          </div>
+          <div class="meta">
+            <h2 class="headline">
+              Buy the best performing 
+              <span class="text-highlight">shares and stocks</span>
+            </h2>
+            <p class="desc">
+              Safaricom, Britam, EABL, KCB, Kakuzi, KPLC, Total Energy, KenGen shares and stocks are all available for trading
+            </p>
+          </div>
+        </div>
+        <div class="content content-3">
+          <div class="mobile-visual">
+            <img
+            class="card-img"
+            src="/img/home/two-men.jpeg"
+            />
+          </div>
+          <div class="meta">
+            <h2 class="headline">
+              Sell at
+              <span class="text-highlight">your own convenience</span>
+            </h2>
+            <p class="desc">
+              Tajiri boasts a peer to peer online market place that is available 24/7 for investors and traders. You can quickly sell your stocks to another person and receive payments in USDC.
+            </p>
+          </div>
+        </div>
+        <div class="content content-4">
+          <div class="mobile-visual">
+            <img
+            class="card-img"
+            src="/img/home/mama-mboga.jpg"
+            />
+          </div>
+          <div class="meta">
+            <h2 class="headline">
+              Make investing <span class="text-highlight">available for everyone</span>
+            </h2>
+            <p class="desc">
+              In a bid to increase the standards of living in Africa and around the world. We want to make it easier for all individuals to be able to invest their income in financial instruments that give high returns.
+            </p>
           </div>
         </div>
       </div>
+      <div class="visual">
+        <div class="card-wrapper">
+          <div class="card card-1">
+            <img
+              class="card-img"
+              src="/img/home/strong-1.webp"
+            />
+          </div>
+          <div class="card card-2">
+            <img
+            class="card-img"
+            src="/img/home/smart-traded.png"
+            />
+          </div>
+          <div class="card card-3">
+            <img
+            class="card-img"
+            src="/img/home/two-men.jpeg"
+            />
+          </div>
+          <div class="card card-4">
+            <img
+            class="card-img"
+            src="/img/home/mama-mboga.jpg"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <script type="text/javascript">
+    const connectButton = document.getElementById('connectButton');
+    const disconnectButton = document.getElementById('disconnectButton');
+    const p2pMarket = document.getElementById('p2pMarket')
+    const walletAddressDisplay = document.getElementById('walletAddress');
+  
+    // Function to format the wallet address
+    function formatWalletAddress(address) {
+      const firstPart = address.slice(0, 5); // First 5 characters
+      const lastPart = address.slice(-3); // Last 3 characters
+      return `${firstPart}...${lastPart}`;
+    }
+  
+    // Load saved wallet address on page load
+    function loadWalletAddress() {
+      const savedAddress = localStorage.getItem('walletAddress');
+      if (savedAddress) {
+        walletAddressDisplay.innerHTML = `Connected: ${savedAddress}`;
+        disconnectButton.innerHTML = `My account ${formatWalletAddress(savedAddress)}`;
+        connectButton.style.display = 'none'; // Hide the connect button
+
+        disconnectButton.style.display = 'inline-block'; // Show the disconnect button
+        p2pMarket.style.display = 'inline-block';
+
+      }
+    }
+  
+    loadWalletAddress(); // Call the function when the page loads
+  
+    // Connect button click event
+    connectButton.addEventListener('click', async () => {
+      if (window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          const walletAddress = accounts[0];
+          localStorage.setItem('walletAddress', walletAddress);
+  
+          walletAddressDisplay.innerHTML = `Connected: ${walletAddress}`;
+          disconnectButton.innerHTML = `My account ${formatWalletAddress(walletAddress)}`;
+  
+          connectButton.style.display = 'none'; // Hide the connect button
+          
+          disconnectButton.style.display = 'inline-block'; // Show the disconnect button
+          p2pMarket.style.display = 'inline-block';
+
+        } catch (error) {
+          console.error('Error connecting to MetaMask:', error);
+        }
+      } else {
+        alert('Web3 wallet is not installed. Please install any web3 wallet to use this Tajiri.');
+      }
+    });
+  
+    // Disconnect button click event
+    disconnectButton.addEventListener('click', () => {
+      // Clear wallet address from localStorage and hide disconnect button
+      localStorage.removeItem('walletAddress');
+      walletAddressDisplay.innerHTML = '';
+      
+      disconnectButton.style.display = 'none'; // Hide the disconnect button
+      p2pMarket.style.display = 'none';
+
+
+      connectButton.style.display = 'inline-block'; // Show the connect button
+      
+      alert('You are now disconnected. Please also disconnect from your wallet manually.');
+    });
+  </script>
+  
+  
 </body>
 </html>

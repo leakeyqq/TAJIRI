@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/leakeyqq/TAJIRI/issues"
   },
-  "homepage": "https://github.com/leakeyqq/TAJIRI#readme"
+  "homepage": "https://github.com/leakeyqq/TAJIRI#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "config": "^3.3.12",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "path": "^0.12.7"
+  }
 }
