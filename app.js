@@ -7,12 +7,15 @@ const session = require('express-session')
 
 
 const indexRouter = require('./routes/index')
+const p2pRouter = require('./routes/market')
 
 const app = express()
 
  // Set view engine   
+ app.set('views', path.join(__dirname, 'views')); // Specify correct views folder
  app.set('view engine', 'ejs')
-
+ app.use(express.static(path.join(__dirname, 'public'))); 
+ 
  // Setting expire headers for static files
 let _1hourMaxAge = 3600000
 app.use(express.static(path.join(__dirname, 'public'), {
@@ -28,5 +31,6 @@ app.use(express.static(path.join(__dirname, 'public'), {
 }));
 
 app.use('/', indexRouter)
+app.use('/p2p', p2pRouter)
 
 app.listen(process.env.RUNNING_PORT,()=>console.info(`App now listening on port ${process.env.RUNNING_PORT}`))
