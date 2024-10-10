@@ -488,7 +488,7 @@ opacity: 0;
       <ul class="nav no-search" style="z-index: 12;">
         <li class="nav-item"><button class="nav-cta-btn" id="connectButton" style="margin-left: 30px;">Connect Wallet</button></li>
         <li class="nav-item"><button class="nav-cta-btn" id="disconnectButton" style="display: none; margin-left: 30px;"></button></li>
-        <li class="nav-item"><a href="/trade/p2p"><button class="nav-cta-btn"  style="margin-left: 30px;">P2P market</button></a></li>
+        <li class="nav-item"><a href="/trade/p2p"><button class="nav-cta-btn" id="p2pMarket"  style="margin-left: 30px;">P2P market</button></a></li>
         <li class="nav-item"><a href="/trade/p2p"><button class="nav-cta-btn"  style="margin-left: 30px;">Mint / Redeem</button></a></li>
 
         <li><a href="/trade"><button class="nav-cta-btn" style="margin-left: 30px;">How to trade</button></a></li>
@@ -620,12 +620,12 @@ opacity: 0;
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
   <script type="text/javascript">
     const connectButton = document.getElementById('connectButton');
     const disconnectButton = document.getElementById('disconnectButton');
-    const p2pMarket = document.getElementById('p2pMarket')
+    // const p2pMarket = document.getElementById('p2pMarket')
     const walletAddressDisplay = document.getElementById('walletAddress');
   
     // Function to format the wallet address
@@ -644,7 +644,7 @@ opacity: 0;
         connectButton.style.display = 'none'; // Hide the connect button
 
         disconnectButton.style.display = 'inline-block'; // Show the disconnect button
-        p2pMarket.style.display = 'inline-block';
+        // p2pMarket.style.display = 'inline-block';
 
       }
     }
@@ -665,7 +665,7 @@ opacity: 0;
           connectButton.style.display = 'none'; // Hide the connect button
           
           disconnectButton.style.display = 'inline-block'; // Show the disconnect button
-          p2pMarket.style.display = 'inline-block';
+          // p2pMarket.style.display = 'inline-block';
 
         } catch (error) {
           console.error('Error connecting to MetaMask:', error);
@@ -682,7 +682,7 @@ opacity: 0;
       walletAddressDisplay.innerHTML = '';
       
       disconnectButton.style.display = 'none'; // Hide the disconnect button
-      p2pMarket.style.display = 'none';
+      // p2pMarket.style.display = 'none';
 
 
       connectButton.style.display = 'inline-block'; // Show the connect button
