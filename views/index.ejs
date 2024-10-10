@@ -6,429 +6,499 @@
     <title>TAJIRI - Trade stocks on the blockchain</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-
-    <style>
-      @layer library, reset, base, demo;
+<link rel="stylesheet" href="/css/styles.css">
+<style>
+  
+@layer library, reset, base, demo;
 @import 'https://unpkg.com/open-props@2.0.0-beta.5' layer(library);
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap');
 
 @layer reset {
 
-  *,
-  ::before,
-  ::after {
-    box-sizing: border-box;
-  }
+*,
+::before,
+::after {
+box-sizing: border-box;
+}
 
-  :where(:not(dialog)) {
-    margin: 0;
-  }
+:where(:not(dialog)) {
+margin: 0;
+}
 }
 
 @layer base {
-  html {
-    --nav-block-size: 74px;
-    --brand-gradient: linear-gradient(227deg,
-        #1400c7 0%,
-        #00bbff 100%);
+html {
+--nav-block-size: 74px;
+--brand-gradient: linear-gradient(227deg,
+  #1400c7 0%,
+  #00bbff 100%);
 
-    @media (prefers-reduced-motion: no-preference) {
-      scroll-behavior: smooth;
-    }
-  }
+@media (prefers-reduced-motion: no-preference) {
+scroll-behavior: smooth;
+}
+}
 
-  body {
-    font-family: 'Inter', sans-serif;
-    min-block-size: 100dvb;
-  }
+body {
+font-family: 'Inter', sans-serif;
+min-block-size: 100dvb;
+}
 }
 
 @layer demo {
-  .navbar {
-    min-block-size: var(--nav-block-size);
-    display: inline-flex;
-    position: fixed;
-    inset-block-start: 0;
-    inset-inline: 0;
-    background-color: white;
-    z-index: var(--layer-3);
-    place-items: center end;
-    padding-block: var(--size-3);
-    padding-inline: var(--size-5);
 
-    @media (width >=600px) {
-      padding-inline: 6dvi;
-    }
-  }
 
-  .nav-cta-btn {
-    font-size: var(--font-size-1);
-    font-weight: var(--font-weight-7);
-    inline-size: max-content;
-    white-space: nowrap;
-    text-decoration: none;
-    padding-block: var(--size-3);
-    padding-inline: var(--size-7);
-    border: var(--border-size-2) solid transparent;
-    color: black;
-    position: relative;
-    isolation: isolate;
+      /* SECTIONS */
 
-    background: linear-gradient(white, white) padding-box,
-      var(--brand-gradient) border-box;
-    border-radius: var(--radius-6);
-    overflow: hidden;
 
-    &::before {
-      content: '';
-      display: block;
-      position: absolute;
-      inset: 0;
 
-      background: var(--brand-gradient);
-      mix-blend-mode: screen;
-    }
 
-    &:hover {
-      color: white;
 
-      &::before {
-        background: var(--brand-gradient) padding-box,
-          var(--brand-gradient) border-box;
-        background-repeat: no-repeat;
-        background-size: contain;
-        mix-blend-mode: normal;
-        z-index: -1;
+      /* MOBILE MENU & ANIMATION */
+
+
+
+      #mobile-menu.is-active .bar:nth-child(2){
+      opacity: 0;
       }
-    }
-  }
 
-  .section {
-    --section-block-size: max(400px, 100dvb);
-    display: grid;
-    background-color: white;
-    min-block-size: var(--section-block-size);
-    position: relative;
-    block-size: 100%;
-    display: grid;
+      #mobile-menu.is-active .bar:nth-child(1){
+      -webkit-transform: translateY(8px) rotate(45deg);
+      -ms-transform: translateY(8px) rotate(45deg);
+      -o-transform: translateY(8px) rotate(45deg);
+      transform: translateY(8px) rotate(45deg);
+      }
 
-    >* {
-      grid-area: 1/1;
-    }
-  }
+      #mobile-menu.is-active .bar:nth-child(3){
+      -webkit-transform: translateY(-8px) rotate(-45deg);
+      -ms-transform: translateY(-8px) rotate(-45deg);
+      -o-transform: translateY(-8px) rotate(-45deg);
+      transform: translateY(-8px) rotate(-45deg);
+      }
 
-  .section-wrapper {
-    position: relative;
-    display: grid;
+      /* KEYFRAME ANIMATIONS */
 
-    @media (width >=960px) {
-      grid-template-columns: 1fr 1fr;
-    }
+      @-webkit-keyframes gradbar {
+          0% {
+              background-position: 0% 50%
+          }
+          50% {
+              background-position: 100% 50%
+          }
+          100% {
+              background-position: 0% 50%
+          }
+      }
 
-    @media (width < 960px) {
-      padding-block-start: calc(var(--nav-block-size) + var(--size-7));
-      padding-block-end: var(--size-7);
-    }
-  }
+      @-moz-keyframes gradbar {
+          0% {
+              background-position: 0% 50%
+          }
+          50% {
+              background-position: 100% 50%
+          }
+          100% {
+              background-position: 0% 50%
+          }
+      }
 
-  .video {
-    display: block;
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
-    position: relative;
-    z-index: -1;
-  }
+      @keyframes gradbar {
+          0% {
+              background-position: 0% 50%
+          }
+          50% {
+              background-position: 100% 50%
+          }
+          100% {
+              background-position: 0% 50%
+          }
+      }
 
-  .content-wrapper {
-    display: grid;
+      /* Media Queries */
 
-    @media (width < 960px) {
-      gap: var(--size-7);
-    }
-  }
+      /* Mobile Devices - Phones/Tablets */
 
-  .meta {
-    display: grid;
-    gap: var(--size-3);
-  }
 
-  .content {
-    display: grid;
-    inline-size: 100%;
-    place-items: center;
-    padding-block: var(--size-7);
-    padding-inline: var(--size-5);
 
-    @media (width >=960px) {
-      padding: var(--size-10);
-      min-block-size: 100cqb;
-      place-items: center end;
-    }
 
-    @media (width < 960px) {
-      gap: var(--size-5);
-    }
-  }
 
-  .mobile-visual {
-    inline-size: 100%;
-    aspect-ratio: var(--ratio-square);
+.nav-cta-btn {
+font-size: var(--font-size-1);
+font-weight: var(--font-weight-7);
+inline-size: max-content;
+white-space: nowrap;
+text-decoration: none;
+padding-block: var(--size-3);
+padding-inline: var(--size-7);
+border: var(--border-size-2) solid transparent;
+color: black;
+position: relative;
+isolation: isolate;
 
-    @media (width >=960px) {
-      display: none;
-    }
-  }
+background: linear-gradient(white, white) padding-box,
+var(--brand-gradient) border-box;
+border-radius: var(--radius-6);
+overflow: hidden;
 
-  .headline {
-    font-size: var(--font-size-7);
-    font-weight: var(--font-weight-4);
-    max-inline-size: var(--size-content-1);
-    text-wrap: pretty;
+&::before {
+content: '';
+display: block;
+position: absolute;
+inset: 0;
 
-    @media (width < 960px) {
-      font-size: var(--font-size-6);
-    }
-  }
+background: var(--brand-gradient);
+mix-blend-mode: screen;
+}
 
-  .desc {
-    font-size: var(--font-size-4);
-    line-height: 1.5;
-    max-inline-size: 40ch;
-    text-wrap: pretty;
+&:hover {
+color: white;
 
-    @media (width < 960px) {
-      font-size: var(--font-size-3);
-    }
-  }
+&::before {
+  background: var(--brand-gradient) padding-box,
+    var(--brand-gradient) border-box;
+  background-repeat: no-repeat;
+  background-size: contain;
+  mix-blend-mode: normal;
+  z-index: -1;
+}
+}
+}
 
-  .visual {
-    display: grid;
-    position: sticky;
-    block-size: var(--section-block-size);
-    inset-block-start: 0;
-    container-type: size;
+.section {
+--section-block-size: max(400px, 100dvb);
+display: grid;
+background-color: white;
+min-block-size: var(--section-block-size);
+position: relative;
+block-size: 100%;
+display: grid;
 
-    @media (width < 960px) {
-      display: none;
-    }
-  }
+>* {
+grid-area: 1/1;
+}
+}
 
-  .video-visual {
-    inline-size: 100%;
-    block-size: var(--section-block-size);
-    display: block;
-    position: sticky;
-    inset-block-start: 0;
-    isolation: isolate;
-    filter: hue-rotate(210deg);
-  }
+.section-wrapper {
+position: relative;
+display: grid;
 
-  .card-wrapper {
-    container-type: size;
-    display: grid;
-    place-items: center;
-    overflow: clip;
+@media (width >=960px) {
+grid-template-columns: 1fr 1fr;
+}
 
-    >* {
-      grid-area: 1/1;
-    }
-  }
+@media (width < 960px) {
+padding-block-start: calc(var(--nav-block-size) + var(--size-7));
+padding-block-end: var(--size-7);
+}
+}
 
-  .card {
-    aspect-ratio: var(--ratio-square);
-    inline-size: 70cqi;
-    border-radius: var(--radius-3);
-    scale: 0.4;
-  }
+.video {
+display: block;
+inline-size: 100%;
+block-size: 100%;
+object-fit: cover;
+position: relative;
+z-index: -1;
+}
 
-  .card-img {
-    display: block;
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
-  }
+.content-wrapper {
+display: grid;
 
-  .card-1 {
-    scale: 1;
-  }
+@media (width < 960px) {
+gap: var(--size-7);
+}
+}
 
-  .card-2 {
-    translate: -35cqi 30cqb;
-    opacity: 0.3;
-  }
+.meta {
+display: grid;
+gap: var(--size-3);
+}
 
-  .card-3 {
-    translate: 0cqi 50cqb;
-    opacity: 0.5;
-  }
+.content {
+display: grid;
+inline-size: 100%;
+place-items: center;
+padding-block: var(--size-7);
+padding-inline: var(--size-5);
 
-  .card-4 {
-    translate: 45cqi 40cqb;
-    opacity: 0.5;
-  }
+@media (width >=960px) {
+padding: var(--size-10);
+min-block-size: 100cqb;
+place-items: center end;
+}
 
-  .content-1 {
-    --_text-gradient: linear-gradient(227deg,
-        #1400c7 0%,
-        #00bbff 100%);
-  }
+@media (width < 960px) {
+gap: var(--size-5);
+}
+}
 
-  .content-2 {
-    --_text-gradient: linear-gradient(227deg,
-        #28dc28 0%,
-        #00bbff 100%);
-  }
+.mobile-visual {
+inline-size: 100%;
+aspect-ratio: var(--ratio-square);
 
-  .content-3 {
-    --_text-gradient: linear-gradient(227deg,
-        #1400c7 0%,
-        #b800b1 100%);
-  }
+@media (width >=960px) {
+display: none;
+}
+}
 
-  .content-4 {
-    --_text-gradient: linear-gradient(227deg,
-        #b800b1 0%,
-        #f50000 100%);
-  }
+.headline {
+font-size: var(--font-size-7);
+font-weight: var(--font-weight-4);
+max-inline-size: var(--size-content-1);
+text-wrap: pretty;
 
-  .text-highlight {
-    background: var(--_text-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
-  }
+@media (width < 960px) {
+font-size: var(--font-size-6);
+}
+}
+
+.desc {
+font-size: var(--font-size-4);
+line-height: 1.5;
+max-inline-size: 40ch;
+text-wrap: pretty;
+
+@media (width < 960px) {
+font-size: var(--font-size-3);
+}
+}
+
+.visual {
+display: grid;
+position: sticky;
+block-size: var(--section-block-size);
+inset-block-start: 0;
+container-type: size;
+
+@media (width < 960px) {
+display: none;
+}
+}
+
+.video-visual {
+inline-size: 100%;
+block-size: var(--section-block-size);
+display: block;
+position: sticky;
+inset-block-start: 0;
+isolation: isolate;
+filter: hue-rotate(210deg);
+}
+
+.card-wrapper {
+container-type: size;
+display: grid;
+place-items: center;
+overflow: clip;
+
+>* {
+grid-area: 1/1;
+}
+}
+
+.card {
+aspect-ratio: var(--ratio-square);
+inline-size: 70cqi;
+border-radius: var(--radius-3);
+scale: 0.4;
+}
+
+.card-img {
+display: block;
+inline-size: 100%;
+block-size: 100%;
+object-fit: cover;
+}
+
+.card-1 {
+scale: 1;
+}
+
+.card-2 {
+translate: -35cqi 30cqb;
+opacity: 0.3;
+}
+
+.card-3 {
+translate: 0cqi 50cqb;
+opacity: 0.5;
+}
+
+.card-4 {
+translate: 45cqi 40cqb;
+opacity: 0.5;
+}
+
+.content-1 {
+--_text-gradient: linear-gradient(227deg,
+  #1400c7 0%,
+  #00bbff 100%);
+}
+
+.content-2 {
+--_text-gradient: linear-gradient(227deg,
+  #28dc28 0%,
+  #00bbff 100%);
+}
+
+.content-3 {
+--_text-gradient: linear-gradient(227deg,
+  #1400c7 0%,
+  #b800b1 100%);
+}
+
+.content-4 {
+--_text-gradient: linear-gradient(227deg,
+  #b800b1 0%,
+  #f50000 100%);
+}
+
+.text-highlight {
+background: var(--_text-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+}
 }
 
 @supports (animation-timeline: scroll()) {
-  body {
-    timeline-scope: --content-1, --content-2, --content-3, --content-4;
-  }
-
-  .section {
-    view-timeline-name: --section;
-  }
-
-  .content-1 {
-    view-timeline-name: --content-1;
-  }
-
-  .content-2 {
-    view-timeline-name: --content-2;
-  }
-
-  .content-3 {
-    view-timeline-name: --content-3;
-  }
-
-  .content-4 {
-    view-timeline-name: --content-4;
-  }
-
-  .card {
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-  }
-
-  .card-1 {
-    animation-timeline: --content-1;
-    animation-name: slide-up-first-card;
-  }
-
-  .card-2 {
-    animation-timeline: --content-2;
-    animation-name: slide-up-card;
-  }
-
-  .card-3 {
-    animation-timeline: --content-3;
-    animation-name: slide-up-card;
-  }
-
-  .card-4 {
-    animation-timeline: --content-4;
-    animation-name: slide-up-card;
-  }
-
-  .video-visual {
-    animation-timeline: --section;
-    animation-range-end: exit 110%;
-    animation-name: update-hue;
-    animation-timing-function: step-end;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes update-hue {
-    0% {
-      filter: hue-rotate(210deg);
-    }
-
-    25% {
-      filter: hue-rotate(150deg);
-    }
-
-    45% {
-      filter: hue-rotate(300deg);
-    }
-
-    60% {
-      filter: hue-rotate(4deg);
-    }
-  }
-
-  @keyframes slide-up-first-card {
-    50% {
-      translate: 0;
-      opacity: 1;
-    }
-
-    90% {
-      translate: 0 -50cqi;
-      scale: 0.6;
-    }
-
-    100% {
-      translate: 0 -100cqi;
-      opacity: 0;
-    }
-  }
-
-  @keyframes slide-up-card {
-    50% {
-      opacity: 1;
-      translate: 0;
-      scale: 1;
-    }
-
-    90% {
-      opacity: 0.5;
-      scale: 0.6;
-      translate: 0 -50cqb;
-    }
-
-    100% {
-      translate: 0 -100cqi;
-      opacity: 0;
-    }
-  }
+body {
+timeline-scope: --content-1, --content-2, --content-3, --content-4;
 }
-    </style>
+
+.section {
+view-timeline-name: --section;
+}
+
+.content-1 {
+view-timeline-name: --content-1;
+}
+
+.content-2 {
+view-timeline-name: --content-2;
+}
+
+.content-3 {
+view-timeline-name: --content-3;
+}
+
+.content-4 {
+view-timeline-name: --content-4;
+}
+
+.card {
+animation-timing-function: linear;
+animation-fill-mode: forwards;
+}
+
+.card-1 {
+animation-timeline: --content-1;
+animation-name: slide-up-first-card;
+}
+
+.card-2 {
+animation-timeline: --content-2;
+animation-name: slide-up-card;
+}
+
+.card-3 {
+animation-timeline: --content-3;
+animation-name: slide-up-card;
+}
+
+.card-4 {
+animation-timeline: --content-4;
+animation-name: slide-up-card;
+}
+
+.video-visual {
+animation-timeline: --section;
+animation-range-end: exit 110%;
+animation-name: update-hue;
+animation-timing-function: step-end;
+animation-fill-mode: forwards;
+}
+
+@keyframes update-hue {
+0% {
+filter: hue-rotate(210deg);
+}
+
+25% {
+filter: hue-rotate(150deg);
+}
+
+45% {
+filter: hue-rotate(300deg);
+}
+
+60% {
+filter: hue-rotate(4deg);
+}
+}
+
+@keyframes slide-up-first-card {
+50% {
+translate: 0;
+opacity: 1;
+}
+
+90% {
+translate: 0 -50cqi;
+scale: 0.6;
+}
+
+100% {
+translate: 0 -100cqi;
+opacity: 0;
+}
+}
+
+@keyframes slide-up-card {
+50% {
+opacity: 1;
+translate: 0;
+scale: 1;
+}
+
+90% {
+opacity: 0.5;
+scale: 0.6;
+translate: 0 -50cqb;
+}
+
+100% {
+translate: 0 -100cqi;
+opacity: 0;
+}
+}
+}
+
+</style>
 </head>
 <body>
-  <nav class="navbar">
+  <div class="nav-wrapper" style="z-index: 10;">
+    <nav class="navbar" style="z-index: 11;">
+      <img src="/img/logos/logo-no-background.png" alt="Company Logo">
+      <div class="menu-toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="nav no-search" style="z-index: 12;">
+        <li class="nav-item"><button class="nav-cta-btn" id="connectButton" style="margin-left: 30px;">Connect Wallet</button></li>
+        <li class="nav-item"><button class="nav-cta-btn" id="disconnectButton" style="display: none; margin-left: 30px;"></button></li>
+        <li class="nav-item"><a href="/trade/p2p"><button class="nav-cta-btn"  style="margin-left: 30px;">P2P market</button></a></li>
+        <li class="nav-item"><a href="/trade/p2p"><button class="nav-cta-btn"  style="margin-left: 30px;">Mint / Redeem</button></a></li>
 
-      <img src="/img/logos/logo-no-background.png" height="50px" alt="">
-    
-    <button class="nav-cta-btn" id="connectButton" style="margin-left: 30px;">Connect Wallet</button>
-    <button class="nav-cta-btn" id="disconnectButton" style="display: none; margin-left: 30px;"></button>
+        <li><a href="/trade"><button class="nav-cta-btn" style="margin-left: 30px;">How to trade</button></a></li>
+        <div id="walletAddress" style="display: none;"></div>
 
-    <button class="nav-cta-btn" id="p2pMarket" style="margin-left: 30px; display: none;">Peer to Peer market</button>
+      </ul>
+    </nav>
+  </div>
 
-    
-    <div id="walletAddress" style="display: none;"></div>
-
-  </nav>
+  
   <div class="section">
     <div class="video-visual">
       <video
@@ -452,7 +522,7 @@
           <div class="mobile-visual">
             <img
               class="card-img"
-              src="/img/home/strong-1.webp"
+              src="/img/home/chain4.svg"
             />
           </div>
           <div class="meta">
@@ -460,7 +530,7 @@
               Trade Kenyan<span class="text-highlight"> stocks on base</span>
             </h2>
             <p class="desc">
-              Get ready to connect your self custodial wallet and trade all stocks available at the Nairobi Securities Exchange (NSE).
+              Get ready to connect your self custodial wallet and trade our tokenized stocks from Nairobi Securities Exchange (NSE).
             </p>
           </div>
         </div>
@@ -469,7 +539,7 @@
 
             <img
             class="card-img"
-            src="/img/home/smart-traded.png"
+            src="/img/home/man-phone.svg"
             />
           </div>
           <div class="meta">
@@ -486,7 +556,7 @@
           <div class="mobile-visual">
             <img
             class="card-img"
-            src="/img/home/two-men.jpeg"
+            src="/img/home/two-happpy.svg"
             />
           </div>
           <div class="meta">
@@ -519,21 +589,22 @@
       <div class="visual">
         <div class="card-wrapper">
           <div class="card card-1">
-            <img
+            <!-- <img
               class="card-img"
               src="/img/home/strong-1.webp"
-            />
+            /> -->
+            <img src="/img/home/chain4.svg" class="card-img" alt="">
           </div>
           <div class="card card-2">
             <img
             class="card-img"
-            src="/img/home/smart-traded.png"
+            src="/img/home/man-phone.svg"
             />
           </div>
           <div class="card card-3">
             <img
             class="card-img"
-            src="/img/home/two-men.jpeg"
+            src="/img/home/two-happpy.svg"
             />
           </div>
           <div class="card card-4">
@@ -546,6 +617,10 @@
       </div>
     </div>
   </div>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
   <script type="text/javascript">
     const connectButton = document.getElementById('connectButton');
@@ -616,6 +691,18 @@
     });
   </script>
   
-  
+         <script>
+            $("#search-icon").click(function() {
+                $(".nav").toggleClass("search");
+                $(".nav").toggleClass("no-search");
+                $(".search-input").toggleClass("search-active");
+                });
+
+                $('.menu-toggle').click(function(){
+                $(".nav").toggleClass("mobile-nav");
+                $(this).toggleClass("is-active");
+                });
+
+       </script>
 </body>
 </html>

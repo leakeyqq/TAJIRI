@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
-const { marketMain } = require('./../controllers/market/main-market')
+const { marketMain, trade, mint} = require('./../controllers/market/main-market')
 
-router.get('/', marketMain)
+router.get('/', trade)
+
+router.get('/p2p', marketMain)
+router.get('/mint', mint)
 
 module.exports = router

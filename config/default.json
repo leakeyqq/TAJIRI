@@ -1,0 +1,19 @@
+{
+    "avatars": {
+        "avatar-1": "https://bootdey.com/img/Content/avatar/avatar7.png",
+        "avatar-2": "https://bootdey.com/img/Content/avatar/avatar1.png",
+        "avatar-3": "https://bootdey.com/img/Content/avatar/avatar6.png",
+        "avatar-4": "https://bootdey.com/img/Content/avatar/avatar4.png",
+        "avatar-5": "https://bootdey.com/img/Content/avatar/avatar2.png",
+        "avatar-6": "https://bootdey.com/img/Content/avatar/avatar3.png"
+    },
+    "stocks-controller-contract": "0xCF305928F0a2B8E8147815b2F3fd133CD5085Ab9",
+    "stocks": {
+        "SCOM": {
+            "short-name": "SCOM",
+            "long-name": "Safaricom",
+            "contract-address": "0x57FEa3a8DFACF3C6b45d3b4a1d3dc83F40630a9F",
+            "eth-price": "47966375879553"
+        }
+    }
+}

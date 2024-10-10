@@ -4,6 +4,21 @@ const config = require('config')
 var path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+// const mongoose = require('mongoose')
+
+
+try {
+  // // Db connection
+  // mongoose.connect(process.env.MONGODB_CONNECTION_STRING,
+  //   {
+  //       useNewUrlParser: true, 
+  //       useUnifiedTopology: true,
+  //   } )
+
+} catch (error) {
+  console.log('A problem connecting with database ', error)
+}
+
 
 
 const indexRouter = require('./routes/index')
@@ -31,6 +46,6 @@ app.use(express.static(path.join(__dirname, 'public'), {
 }));
 
 app.use('/', indexRouter)
-app.use('/p2p', p2pRouter)
+app.use('/trade', p2pRouter)
 
 app.listen(process.env.RUNNING_PORT,()=>console.info(`App now listening on port ${process.env.RUNNING_PORT}`))

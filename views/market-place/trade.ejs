@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+}
+
+body {
+  color: #001c35;
+  background-color: #e3eafc;
+  font-family: "Poppins", sans-serif;
+}
+
+h1 {
+  font-size: 32px;
+  font-style: italic;
+  margin-bottom: 3rem;
+}
+
+h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+p {
+  font-size: 14px;
+  margin: 0.5rem 0;
+}
+
+section {
+  width: 100%;
+  max-width: 800px;
+  padding: 4rem 1rem;
+  margin: 0 auto;
+}
+
+section img {
+  width: 100%;
+  max-width: 520px;
+  height: 100%;
+  max-height: 200px;
+  /* object-fit: cover; */
+  object-fit:scale-down;
+  margin: 1rem 0;
+  display: block;
+  border-radius: 8px;
+  transform-origin: center;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media screen and (max-width: 580px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes scaleProgress {
+  from {
+    transform: scalex(0);
+  }
+  to {
+    transform: scalex(100%);
+  }
+}
+
+
+@keyframes fade-in {
+  from {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.card {
+  width: 100%;
+  max-width: 520px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  animation: fade-in linear both;
+  /* view function */
+  animation-timeline: view();
+  animation-range: entry 10% entry 80%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+  <div class="nav-wrapper" style="z-index: 10;">
+    <nav class="navbar" style="z-index: 11;">
+      <img src="/img/logos/logo-no-background.png" alt="Company Logo">
+      <div class="menu-toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="nav no-search" style="z-index: 12;">
+        <li class="nav-item"><button class="nav-cta-btn" id="connectButton" style="margin-left: 30px;">Connect Wallet</button></li>
+        <li class="nav-item"><button class="nav-cta-btn" id="disconnectButton" style="display: none; margin-left: 30px;"></button></li>
+        <li class="nav-item"><a href="/trade/p2p"><button class="nav-cta-btn" id="" style="margin-left: 30px;">P2P market</button></a></li>
+        <li><a href="/trade"><button class="nav-cta-btn" style="margin-left: 30px;">How to trade</button></a></li>
+        <div id="walletAddress" style="display: none;"></div>
+
+      </ul>
+    </nav>
+  </div>
+<section>
+  <h1 class="text-success">How to buy a stock on Tajiri
+  </h1>
+  <div class="card-container">
+    <div class="card">
+    <p class="lead"><span class="badge bg-success">Option 1</span></p>
+
+      <h2 class="fw-bolder">Mint a new stock</h2>
+      <img src="/img/home/woman-mint.svg" alt="img" style="background-size: cover;"/>
+       <ul>
+            <li>I enter amount of company X stocks that I want to mint.</li>
+            <li>I pay for the stocks with USDC.</li>
+            <li>Tajiri places a buy order with a licensed stock broker.</li>
+            <li>The stock broker issues Tajiri with the actual stocks from company X.</li>
+            <li>Tajiri mints virtual stocks which represent the purchased stocks.</li>
+            <li>Tajiri transfers the minted stocks to my wallet address.</li>
+       </ul>
+       <a href="#" class="btn btn-success">Mint now</a>
+    </div>
+    <div class="card">
+    <p class="lead"><span class="badge bg-success">Option 2</span></p>
+
+    <h2 class="fw-bolder">Buy already minted stocks on p2p</h2>
+      <img src="/img/home/buy-mints.svg" alt="img" />
+      <ul>
+        <li>I go to Tajiri peer to peer market place</li>
+        <li>I look for users offering to sell their minted stocks.</li>
+        <li>I pick the best offer and pay that user with USDC.</li>
+        <li>The user transfers their minted stocks to my wallet address.</li>
+
+      </ul>
+      <a href="#" class="btn btn-success">Buy on P2P Market</a>
+
+    </div>
+  </div>
+</section>
+
+
+<section>
+    <h1 class="text-danger">How to sell a stock on Tajiri
+    </h1>
+    <div class="card-container">
+      <div class="card">
+        <p class="lead"><span class="badge bg-danger">Option 1</span></p>
+  
+        <h2 class="fw-bolder">Redeem a stock</h2>
+        <img src="/img/home/curtain-man.svg" alt="img" />
+         <ul>
+              <li>I tranfer back my minted stocks from my wallet to Tajiri smart contract.</li>
+              <li>Tajiri places a sell order of the actual stocks with a licensed stock broker.</li>
+              <li>I receive USDC as earnings from the sale of the actual stocks at the current market price.</li>
+              <li>Tajiri burns the virtual stocks that I have redeemed.</li>
+
+         </ul>
+         <a href="#" class="btn btn-danger">Redeem now</a>
+      </div>
+      <div class="card">
+        <p class="lead"><span class="badge bg-danger">Option 2</span></p>
+        <h2 class="fw-bolder">Sell my minted stocks on p2p</h2>
+        <img src="/img/home/girls-talk.svg" alt="img" />
+        <ul>
+          <li>I go to Tajiri peer to peer market place</li>
+          <li>I look for users offering to buy my minted stocks.</li>
+          <li>I pick the best offer available.</li>
+          <li>I get paid with USDC and I transfer my minted stocks to the other user.</li>
+        </ul>
+        <a href="#" class="btn btn-danger">Sell on P2P Market</a>
+  
+      </div>
+    </div>
+  </section>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script type="text/javascript">
+const connectButton = document.getElementById('connectButton');
+const disconnectButton = document.getElementById('disconnectButton');
+const p2pMarket = document.getElementById('p2pMarket')
+const walletAddressDisplay = document.getElementById('walletAddress');
+
+// Function to format the wallet address
+function formatWalletAddress(address) {
+ const firstPart = address.slice(0, 5); // First 5 characters
+ const lastPart = address.slice(-3); // Last 3 characters
+ return `${firstPart}...${lastPart}`;
+}
+
+// Load saved wallet address on page load
+function loadWalletAddress() {
+ const savedAddress = localStorage.getItem('walletAddress');
+ if (savedAddress) {
+   walletAddressDisplay.innerHTML = `Connected: ${savedAddress}`;
+   disconnectButton.innerHTML = `My account ${formatWalletAddress(savedAddress)}`;
+   connectButton.style.display = 'none'; // Hide the connect button
+
+   disconnectButton.style.display = 'inline-block'; // Show the disconnect button
+   p2pMarket.style.display = 'inline-block';
+
+ }
+}
+
+loadWalletAddress(); // Call the function when the page loads
+
+// Connect button click event
+connectButton.addEventListener('click', async () => {
+ if (window.ethereum) {
+   try {
+     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+     const walletAddress = accounts[0];
+     localStorage.setItem('walletAddress', walletAddress);
+
+     walletAddressDisplay.innerHTML = `Connected: ${walletAddress}`;
+     disconnectButton.innerHTML = `My account ${formatWalletAddress(walletAddress)}`;
+
+     connectButton.style.display = 'none'; // Hide the connect button
+     
+     disconnectButton.style.display = 'inline-block'; // Show the disconnect button
+     p2pMarket.style.display = 'inline-block';
+
+   } catch (error) {
+     console.error('Error connecting to MetaMask:', error);
+   }
+ } else {
+   alert('Web3 wallet is not installed. Please install any web3 wallet to use this Tajiri.');
+ }
+});
+
+// Disconnect button click event
+disconnectButton.addEventListener('click', () => {
+ // Clear wallet address from localStorage and hide disconnect button
+ localStorage.removeItem('walletAddress');
+ walletAddressDisplay.innerHTML = '';
+ 
+ disconnectButton.style.display = 'none'; // Hide the disconnect button
+ p2pMarket.style.display = 'none';
+
+
+ connectButton.style.display = 'inline-block'; // Show the connect button
+ 
+ alert('You are now disconnected. Please also disconnect from your wallet manually.');
+});
+</script>
+      
+  <script>
+    $("#search-icon").click(function() {
+        $(".nav").toggleClass("search");
+        $(".nav").toggleClass("no-search");
+        $(".search-input").toggleClass("search-active");
+        });
+
+        $('.menu-toggle').click(function(){
+        $(".nav").toggleClass("mobile-nav");
+        $(this).toggleClass("is-active");
+        });
+
+</script>
+    
+  
+</body>
+</html>
