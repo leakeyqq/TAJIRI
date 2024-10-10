@@ -10,24 +10,7 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <div class="nav-wrapper" style="z-index: 10;">
-        <nav class="navbar" style="z-index: 11;">
-          <img src="/img/logos/logo-no-background.png" alt="Company Logo">
-          <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </div>
-          <ul class="nav no-search" style="z-index: 12;">
-            <li class="nav-item"><button class="nav-cta-btn" id="connectButton" style="margin-left: 30px;">Connect Wallet</button></li>
-            <li class="nav-item"><button class="nav-cta-btn" id="disconnectButton" style="display: none; margin-left: 30px;"></button></li>
-            <li class="nav-item"><a href="/trade/p2p"><button class="nav-cta-btn" id="" style="margin-left: 30px;">P2P market</button></a></li>
-            <li><a href="/trade"><button class="nav-cta-btn" style="margin-left: 30px;">How to trade</button></a></li>
-            <div id="walletAddress" style="display: none;"></div>
-    
-          </ul>
-        </nav>
-      </div>
+	<%- include('../main-nav.ejs') %>
 
 
 <div class="container">
@@ -93,10 +76,6 @@
 </div>
 
 
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
       <script>
                 $(document).ready(function() {
             // Get stock price from the input field
@@ -114,89 +93,6 @@
 
       </script>
 
-      <script>
-        $("#search-icon").click(function() {
-            $(".nav").toggleClass("search");
-            $(".nav").toggleClass("no-search");
-            $(".search-input").toggleClass("search-active");
-            });
-    
-            $('.menu-toggle').click(function(){
-            $(".nav").toggleClass("mobile-nav");
-            $(this).toggleClass("is-active");
-            });
-    
-    </script>
-
-    
-  <script type="text/javascript">
-    const connectButton = document.getElementById('connectButton');
-    const disconnectButton = document.getElementById('disconnectButton');
-    const p2pMarket = document.getElementById('p2pMarket')
-    const walletAddressDisplay = document.getElementById('walletAddress');
-  
-    // Function to format the wallet address
-    function formatWalletAddress(address) {
-      const firstPart = address.slice(0, 5); // First 5 characters
-      const lastPart = address.slice(-3); // Last 3 characters
-      return `${firstPart}...${lastPart}`;
-    }
-  
-    // Load saved wallet address on page load
-    function loadWalletAddress() {
-      const savedAddress = localStorage.getItem('walletAddress');
-      if (savedAddress) {
-        walletAddressDisplay.innerHTML = `Connected: ${savedAddress}`;
-        disconnectButton.innerHTML = `My account ${formatWalletAddress(savedAddress)}`;
-        connectButton.style.display = 'none'; // Hide the connect button
-
-        disconnectButton.style.display = 'inline-block'; // Show the disconnect button
-        p2pMarket.style.display = 'inline-block';
-
-      }
-    }
-  
-    loadWalletAddress(); // Call the function when the page loads
-  
-    // Connect button click event
-    connectButton.addEventListener('click', async () => {
-      if (window.ethereum) {
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const walletAddress = accounts[0];
-          localStorage.setItem('walletAddress', walletAddress);
-  
-          walletAddressDisplay.innerHTML = `Connected: ${walletAddress}`;
-          disconnectButton.innerHTML = `My account ${formatWalletAddress(walletAddress)}`;
-  
-          connectButton.style.display = 'none'; // Hide the connect button
-          
-          disconnectButton.style.display = 'inline-block'; // Show the disconnect button
-          p2pMarket.style.display = 'inline-block';
-
-        } catch (error) {
-          console.error('Error connecting to MetaMask:', error);
-        }
-      } else {
-        alert('Web3 wallet is not installed. Please install any web3 wallet to use this Tajiri.');
-      }
-    });
-  
-    // Disconnect button click event
-    disconnectButton.addEventListener('click', () => {
-      // Clear wallet address from localStorage and hide disconnect button
-      localStorage.removeItem('walletAddress');
-      walletAddressDisplay.innerHTML = '';
-      
-      disconnectButton.style.display = 'none'; // Hide the disconnect button
-      p2pMarket.style.display = 'none';
-
-
-      connectButton.style.display = 'inline-block'; // Show the connect button
-      
-      alert('You are now disconnected. Please also disconnect from your wallet manually.');
-    });
-  </script>
   
 
   <script>
@@ -590,7 +486,7 @@
         document.getElementById('transactionDetails').style.display = 'block';
 
           
-      //  alert('Minting was successful');
+       alert('Minting was successful');
 
         } catch (error) {
             console.error(error);
@@ -608,7 +504,7 @@
     const tokenAddress = '0x57FEa3a8DFACF3C6b45d3b4a1d3dc83F40630a9F'; // Replace with your token's contract address
     const tokenSymbol = 'SCOM'; // Replace with your token's symbol (e.g., 'SYM')
     const tokenDecimals = 18; // Number of decimals for your token, typically 18
-    const tokenImage = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Ftwitter.com%2Fsafaricomplc&psig=AOvVaw0T0LOH3o_Om9zWbjUbcR0O&ust=1728670501866000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMC98q21hIkDFQAAAAAdAAAAABAE'; // Optional: link to a token image
+    const tokenImage = 'https://i.ibb.co/BLvh1GX/SCOM.jpg'; // Optional: link to a token image
 
     
     try {
