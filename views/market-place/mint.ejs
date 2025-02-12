@@ -10,15 +10,23 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-	<%- include('../main-nav.ejs') %>
+<%- include('../main-nav.ejs') %>
 
 
 <div class="container">
   <form action="" method="get" class="mx-auto my-5" style="max-width: 700px;">
     <div class="my-3 display-6 fs-3">Mint new stocks</div>
 
+	<div class="w-100 my-2 text-center">
+		<button id="importTokenBtn" type="button" class="btn btn-danger w-100 mx-auto">
+			Import Token to wallet
+		</button>
+	</div>
+
     <div class="border rounded p-2 my-2" id="transactionDetails" style="background-color: rgb(196, 215, 231); display: none;">
-      <div>Transaction hash is <span id="txHash"></span></div>
+      <div class="spinner-grow text-primary"></div>
+      <div> Successfully minted Safaricom stocks from ETH. Check your wallet balance.
+		<br>Transaction hash is <span id="txHash"></span></div>
       <div><a href="" target="_blank" id="txLink"></a></div>
     </div>
 
@@ -32,7 +40,6 @@
       <div class="input-group">
         <span class="input-group-text"><img src="/img/stocks/SCOM.jpeg" width="25px" height="25px" alt=""></span>
         <input type="text" name="stockSymbol" id="stockSymbol" value="SCOM" class="form-control" disabled>
-
       </div>
     </div>
 
@@ -65,11 +72,6 @@
       <button type="button" class="btn btn-outline-primary w-100 mx-auto">Start minting</button>
     </div>
 
-    <div class="w-100 my-2 text-center">
-      <button id="importTokenBtn" type="button" class="btn btn-danger w-100 mx-auto">
-          Import Token to wallet
-      </button>
-  </div>
   
 
   </form>

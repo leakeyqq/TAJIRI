@@ -8,4 +8,7 @@ const trade = (req, res)=>{
 const mint = (req, res)=>{
     res.render('market-place/mint', {req})
 }
-module.exports = { marketMain, trade, mint }
+const redeem = (req, res)=>{
+    res.render('market-place/redeem', {req})
+}
+module.exports = { marketMain, trade, mint, redeem }
